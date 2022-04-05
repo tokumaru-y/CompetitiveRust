@@ -1,0 +1,37 @@
+---
+type: Batch
+timelimit: 4s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      3
+      arc
+    out: |
+      1
+      3
+      2
+  - name: sample2
+    in: |
+      2
+      zz
+    out: |
+      1
+      2
+  - name: sample3
+    in: |
+      5
+      abaab
+    out: |
+      3
+      1
+      4
+      2
+      5
+
+extend:
+  - type: Text
+    path: "./d"
+    in: /in/*.txt
+    out: /out/*.txt

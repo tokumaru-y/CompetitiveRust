@@ -1,0 +1,53 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      5 7 3
+      GET..ET
+      ..T....
+      .TEST..
+      .E.T.ET
+      ...ETC.
+    out: |
+      19
+  - name: sample2
+    in: |
+      5 7 2
+      GET..ET
+      ..T....
+      .TEST..
+      .E.T.ET
+      ...ETC.
+    out: |
+      21
+  - name: sample3
+    in: |
+      5 7 1
+      GET..ET
+      ..T....
+      .TEST..
+      .E.T.ET
+      ...ETC.
+    out: |
+      -1
+  - name: sample4
+    in: |
+      6 35 4
+      T...TT.....TT...TTT...TTT..TTG.....
+      ..T..T.TTT.T..T..E..T..E...TTT.TTT.
+      .TTT.T.....E.TTTTT.TTT.TTT.TTT.....
+      .....T.TT.TT.TTTTT.TTT.TTT.TTTTTTT.
+      .TTT.T.TT..T..T..S..T..TTT.TTTTTTT.
+      .CTT.E.TTT.TT...TTT...TT.....E.....
+    out: |
+      94
+
+extend:
+  - type: Text
+    path: "./c"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -1,0 +1,40 @@
+---
+type: Batch
+timelimit: 5s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      5
+      #....
+      ..s..
+      ..#..
+      #....
+      ##..#
+    out: |
+      POSSIBLE
+  - name: sample2
+    in: |
+      5
+      s.###
+      ..###
+      ###..
+      #....
+      #..##
+    out: |
+      IMPOSSIBLE
+  - name: sample3
+    in: |
+      3
+      ..#
+      .s.
+      #..
+    out: |
+      IMPOSSIBLE
+
+extend:
+  - type: Text
+    path: "./d"
+    in: /in/*.txt
+    out: /out/*.txt

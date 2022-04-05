@@ -1,0 +1,27 @@
+---
+type: Batch
+timelimit: 5s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      takaitai
+    out: |
+      2
+  - name: sample2
+    in: |
+      aaaaaaaaaa
+    out: |
+      6
+  - name: sample3
+    in: |
+      abcabc
+    out: |
+      0
+
+extend:
+  - type: Text
+    path: "./c"
+    in: /in/*.txt
+    out: /out/*.txt

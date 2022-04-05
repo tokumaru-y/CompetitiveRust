@@ -1,0 +1,32 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      6
+    out: |
+      Perfect
+  - name: sample2
+    in: |
+      24
+    out: |
+      Abundant
+  - name: sample3
+    in: |
+      27
+    out: |
+      Deficient
+  - name: sample4
+    in: |
+      945
+    out: |
+      Abundant
+
+extend:
+  - type: Text
+    path: "./b"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -1,0 +1,27 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      Left Right AtCoder
+    out: |
+      < > A
+  - name: sample2
+    in: |
+      Left Left Right Right AtCoder
+    out: |
+      < < > > A
+  - name: sample3
+    in: |
+      Right Right AtCoder Left Left AtCoder
+    out: |
+      > > A < < A
+
+extend:
+  - type: Text
+    path: "./a"
+    in: /in/*.txt
+    out: /out/*.txt

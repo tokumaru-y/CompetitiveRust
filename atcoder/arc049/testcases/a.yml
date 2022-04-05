@@ -1,0 +1,30 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      MinnnahaNakayoshi
+      0 6 8 17
+    out: |
+      "Minnna"ha"Nakayoshi"
+  - name: sample2
+    in: |
+      Niwawo_Kakemeguru_Chokudai
+      11 17 18 26
+    out: |
+      Niwawo_Kake"meguru"_"Chokudai"
+  - name: sample3
+    in: |
+      ___
+      0 1 2 3
+    out: |
+      "_"_"_"
+
+extend:
+  - type: Text
+    path: "./a"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -1,0 +1,44 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      2 3
+      arc
+      rac
+    out: |
+      YES
+  - name: sample2
+    in: |
+      3 7
+      atcoder
+      regular
+      contest
+    out: |
+      NO
+  - name: sample3
+    in: |
+      12 12
+      bimonigaloaf
+      faurwlkbleht
+      dexwimqxzxbb
+      lxdgyoifcxid
+      ydxiliocfdgx
+      nfoabgilamoi
+      ibxbdqmzxxwe
+      pqirylfrcrnf
+      wtehfkllbura
+      yfrnpflcrirq
+      wvcclwgiubrk
+      lkbrwgwuiccv
+    out: |
+      YES
+
+extend:
+  - type: Text
+    path: "./e"
+    in: /in/*.txt
+    out: /out/*.txt
