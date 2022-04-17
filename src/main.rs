@@ -1,27 +1,57 @@
-use std::{collections::{BinaryHeap, HashMap}, cmp::Reverse};
+use std::{collections::{BinaryHeap, HashMap, VecDeque}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
 fn main() {
     input!{
-        N: usize,
-        names: [[String; 2]; N],
+        Q: usize,
     }
-    for i in 0..N {
-        let mut is_ok = false;
-        for ni in 0..2{
-            let mut n_ok = true;
-            for j in 0..N {
-                if i == j {continue;}
-                if names[i][ni] == names[j][0] || names[i][ni] == names[j][1] {
-                    n_ok = false;
-                }
+    let mut ans = Vec::new();
+    let mut deque = VecDeque::new();
+    let mut pre_cnt = 0;
+    let mut pre_num = 0;
+    for _ in 0..Q{
+        input!{
+            cmd: usize,
+        }
+        if cmd == 1 {
+            input!{
+                x: usize,
+                c: usize,
             }
-            if n_ok == true { is_ok = true;}
-        }
-        if is_ok == false {
-            println!("No");
-            std::process::exit(0);
+            deque.push_back([x,c]);
+        } else {
+            input!{
+                mut c: usize,
+            }
+            let mut tmp = 0;
+            if pre_cnt < c {
+                tmp = pre_num * pre_cnt;
+                c -= pre_cnt;
+                pre_cnt = 0;
+                pre_num = 0;
+                while c > 0 {
+                    let num_cnt = deque.pop_front().unwrap();
+                    let num = num_cnt[0];
+                    let cnt = num_cnt[1];
+                    if c >= cnt {
+                        c -= cnt;
+                        tmp += cnt * num;
+                    } else {
+                        pre_cnt = cnt - c;
+                        pre_num = num;
+                        tmp += c * num;
+                        c=0;
+                    }
+                }
+                if tmp >0 {
+                    ans.push(tmp);
+                }
+            } else {
+                ans.push(c * pre_num);
+                pre_cnt -= c;
+                c = 0;
+            }
         }
     }
-    println!("Yes");
+    println!("{}", ans.iter().map(|x| x.to_string()).collect::<Vec<String>>().join("\n"));
 }
