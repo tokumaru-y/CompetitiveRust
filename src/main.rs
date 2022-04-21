@@ -1,57 +1,50 @@
 use std::{collections::{BinaryHeap, HashMap, VecDeque}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
+
+fn calc(list: Vec<usize>, X: usize, Y: usize) -> usize {
+    let mut i = 0;
+    let mut j = 0;
+    let mut count_x = 0;
+    let mut count_y = 0;
+    let mut res = 0;
+    while i != list.len() {
+        while j != list.len() && (count_x == 0 || count_y == 0){
+            if list[j] == X { count_x += 1 }
+            if list[j] == Y { count_y += 1 }
+            j+=1;
+        }
+        if count_x > 0 && count_y > 0{
+            res += list.len() + 1 - j;
+        }
+        if list[i] == X { count_x -= 1 }
+        if list[i] == Y { count_y -= 1 }
+        i+=1;
+    }
+    return res;
+}
+
 fn main() {
     input!{
-        Q: usize,
+        N: usize,
+        X: usize,
+        Y: usize,
+        A: [usize; N],
     }
-    let mut ans = Vec::new();
-    let mut deque = VecDeque::new();
-    let mut pre_cnt = 0;
-    let mut pre_num = 0;
-    for _ in 0..Q{
-        input!{
-            cmd: usize,
+    let mut ans = 0;
+    let mut index = 0;
+    while index < N  {
+        let mut list = Vec::new();
+        while index < N && (A[index] >= Y) && (A[index] <= X) {
+            list.push(A[index]);
+            index += 1;
         }
-        if cmd == 1 {
-            input!{
-                x: usize,
-                c: usize,
-            }
-            deque.push_back([x,c]);
-        } else {
-            input!{
-                mut c: usize,
-            }
-            let mut tmp = 0;
-            if pre_cnt < c {
-                tmp = pre_num * pre_cnt;
-                c -= pre_cnt;
-                pre_cnt = 0;
-                pre_num = 0;
-                while c > 0 {
-                    let num_cnt = deque.pop_front().unwrap();
-                    let num = num_cnt[0];
-                    let cnt = num_cnt[1];
-                    if c >= cnt {
-                        c -= cnt;
-                        tmp += cnt * num;
-                    } else {
-                        pre_cnt = cnt - c;
-                        pre_num = num;
-                        tmp += c * num;
-                        c=0;
-                    }
-                }
-                if tmp >0 {
-                    ans.push(tmp);
-                }
-            } else {
-                ans.push(c * pre_num);
-                pre_cnt -= c;
-                c = 0;
-            }
+        if list.len() > 0 {
+            let x = X;
+            let y = Y;
+            ans += calc(list,x,y);
         }
+        index += 1;
     }
-    println!("{}", ans.iter().map(|x| x.to_string()).collect::<Vec<String>>().join("\n"));
+    println!("{}", ans);
 }
