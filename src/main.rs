@@ -1,47 +1,45 @@
 use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
-#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
-enum ValueType {
-    Boxes(usize),
-    Chocolates(usize),
-}
 
 fn main() {
-    input!{
+    input! {
         N: usize,
         M: usize,
-        A: [isize; N],
-        B: [isize; N],
-        C: [isize; M],
-        D: [isize; M],
+        K: usize,
+        S: usize,
+        T: usize,
+        X: usize,
+        UV: [[usize; 2]; M],
     }
-    let mut options = Vec::new();
-    for i in 0..N {
-        options.push((-A[i], ValueType::Chocolates(2), B[i]));
+    let MOD = 998244353;
+    let mut list = vec![Vec::new(); N];
+    for i in 0..M {
+        let n = &UV[i];
+        let a = n[0] - 1 ;let b = n[1] - 1;
+        list[a].push(b);
+        list[b].push(a);
     }
-    for i in 0..M{
-        options.push((-C[i], ValueType::Boxes(1), D[i]));
+    let mut dp = vec![vec![vec![0; 2]; N]; K+1];
+    if S == X {
+        dp[0][S-1][1] = 1;
+    } else {
+        dp[0][S-1][0] = 1;
     }
-    options.sort();
-    let mut b_tree = BTreeMap::new();
-    for i in 0..options.len() {
-        let tuple = options[i];
-        if tuple.1 == ValueType::Boxes(1) {
-            *b_tree.entry(tuple.2).or_insert(0) += 1;
-        } else if tuple.1 == ValueType::Chocolates(2) {
-            let first = b_tree.range(tuple.2..).nth(0);
-            if first.is_none() {
-                println!("No");
-                std::process::exit(0);
-            }
-            let (&k, &v) = first.unwrap();
-            if v > 1 {
-                b_tree.insert(k, v-1);
-            } else {
-                b_tree.remove(&k);
+    for k in 0..K{
+        for j in 0..N {
+            for i in 0..2 {
+                for l_ind in 0..list[j].len() {
+                    let n_ind = list[j][l_ind];
+                    if n_ind + 1 == X {
+                        dp[k+1][n_ind][i] += dp[k][j][(i+1)%2];
+                    } else {
+                        dp[k+1][n_ind][i] += dp[k][j][i];
+                    }
+                    dp[k+1][n_ind][i] %= MOD;
+                }
             }
         }
     }
-    println!("Yes");
+    println!("{}", dp[K][T-1][0] % MOD);
 }
