@@ -1,7 +1,7 @@
 use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
-
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 enum ValueType {
     Boxes(usize),
     Chocolates(usize),
@@ -27,9 +27,9 @@ fn main() {
     let mut b_tree = BTreeMap::new();
     for i in 0..options.len() {
         let tuple = options[i];
-        if tuple.1 == 1 {
+        if tuple.1 == ValueType::Boxes(1) {
             *b_tree.entry(tuple.2).or_insert(0) += 1;
-        } else if tuple.1 == 2 {
+        } else if tuple.1 == ValueType::Chocolates(2) {
             let first = b_tree.range(tuple.2..).nth(0);
             if first.is_none() {
                 println!("No");
