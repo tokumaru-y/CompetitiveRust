@@ -1,21 +1,41 @@
-use std::{collections::{BinaryHeap, HashMap, VecDeque}, cmp::Reverse};
+use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
-
-
 fn main() {
     input!{
         N: usize,
         M: usize,
-        A: [isize; N+1],
-        mut C: [isize; N+M+1],
+        A: [isize; N],
+        B: [isize; N],
+        C: [isize; M],
+        D: [isize; M],
     }
-    let mut ans = vec![0; M+1];
-    for b_index in (0..M+1).rev() {
-        ans[b_index] = C[b_index + N] / A[N];
-        for a_index in 0..N+1 {
-            C[a_index + b_index] -= ans[b_index] * A[a_index];
+    let mut options = Vec::new();
+    for i in 0..N {
+        options.push((-A[i], 2, B[i]));
+    }
+    for i in 0..M{
+        options.push((-C[i], 1, D[i]));
+    }
+    options.sort();
+    let mut b_tree = BTreeMap::new();
+    for i in 0..options.len() {
+        let tuple = options[i];
+        if tuple.1 == 1 {
+            *b_tree.entry(tuple.2).or_insert(0) += 1;
+        } else if tuple.1 == 2 {
+            let first = b_tree.range(tuple.2..).nth(0);
+            if first.is_none() {
+                println!("No");
+                std::process::exit(0);
+            }
+            let (&k, &v) = first.unwrap();
+            if v > 1 {
+                b_tree.insert(k, v-1);
+            } else {
+                b_tree.remove(&k);
+            }
         }
     }
-    println!("{}", ans.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(" "));
+    println!("Yes");
 }
