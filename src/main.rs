@@ -1,33 +1,74 @@
 use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 
 use proconio::{input, marker::Chars};
-fn get_char(t:usize, k:usize, S: &Vec<char>) -> char {
-    if t == 0 { return S[k] }
-    if k == 0 { return calc_char(S[0], t) }
-    calc_char(get_char(t-1, k/2, S), k%2+1)
-}
-
-fn calc_char(c: char, ind: usize) -> char {
-    let chars = ['A', 'B', 'C'];
-    let now_ind = match c {
-        'A' => 0,
-        'B' => 1,
-        'C' => 2,
-        _ => 100,
-    };
-    chars[(now_ind + ind)%3]
-}
 
 fn main() {
-    input!{
-        S: Chars,
-        Q: usize,
-        TK: [[usize; 2]; Q],
+    input! {
+        mut T: usize,
     }
-    for i in 0..Q{
-        let t = TK[i][0];
-        let k = TK[i][1];
-        let ans = get_char(t, k-1, &S);
+    let MOD = 998244353;
+    let mut alpha_tabel = Vec::new();
+    for b in b'A'..=b'Z' {
+        alpha_tabel.push(char::from(b));
+    }
+    while T > 0 {
+        T -= 1;
+        input! {
+            N: usize,
+            S: Chars,
+        }
+        let limit = if N % 2 == 0 { N / 2 } else { N / 2 + 1 };
+        let mut dp = vec![vec![vec![0; 2]; 26]; limit+1];
+        for i in 0..26 {
+            if alpha_tabel[i] < S[0] && alpha_tabel[i] < S[N-1] {
+                dp[1][i][0] += 1;
+            } else if (alpha_tabel[i] < S[0] && alpha_tabel[i] == S[N-1]) || (alpha_tabel[i] == S[0] && alpha_tabel[i] < S[N-1]) || (alpha_tabel[i] == S[0] && alpha_tabel[i] == S[N-1]) {
+                dp[1][i][1] += 1;
+            }
+        }
+        for i in 1..limit {
+            for j in 0..26 {
+                for k in 0..26 {
+                    for m in 0..2{
+                        if m == 0 {
+                            // なんでもOK
+                            dp[i+1][j][m] += dp[i][k][0] + dp[i][k][1];
+                            dp[i+1][j][m] %= MOD;
+                        } else {
+                            // ギリギリを攻める
+                            if alpha_tabel[j] < S[i] && alpha_tabel[j] < S[N-i-1] {
+                                dp[i+1][j][0] += dp[i][k][0] + dp[i][k][1];
+                                dp[i+1][j][0] %= MOD;
+                            } else if (alpha_tabel[j] < S[i] && alpha_tabel[j] == S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] < S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] == S[N-i-1]) {
+                                dp[i+1][j][1] += dp[i][k][1];
+                                dp[i+1][j][1] %= MOD;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // for i in 1..limit {
+        //     for j in 0..26 {
+        //         for k in 0..26 {
+        //             if alpha_tabel[j] < S[i] && alpha_tabel[j] < S[N-i-1] {
+        //                 // dp[i+1][j][0] += dp[i][k][0];
+        //                 dp[i+1][j][0] += dp[i][k][1];
+        //                 dp[i+1][j][0] %= MOD;
+        //             } else if (alpha_tabel[j] < S[i] && alpha_tabel[j] == S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] < S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] == S[N-i-1]) {
+        //                 dp[i+1][j][1] += dp[i][k][1];
+        //                 dp[i+1][j][1] %= MOD;
+        //             }
+        //             dp[i+1][j][0] += dp[i][k][0];
+        //             dp[i+1][j][0] %= MOD;
+        //         }
+        //     }
+        // }
+        let mut ans = 0;
+        for i in 0..26 {
+            ans += dp[limit][i][0] + dp[limit][i][1];
+            ans %= MOD;
+        }
         println!("{}", ans);
     }
 }
