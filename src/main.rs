@@ -7,9 +7,9 @@ fn main() {
         mut T: usize,
     }
     let MOD = 998244353;
-    let mut alpha_tabel = Vec::new();
-    for b in b'A'..=b'Z' {
-        alpha_tabel.push(char::from(b));
+    let mut alpha_tabel = HashMap::new();
+    for (i, b) in (b'A'..=b'Z').enumerate() {
+        alpha_tabel.insert(char::from(b), i);
     }
     while T > 0 {
         T -= 1;
@@ -17,58 +17,26 @@ fn main() {
             N: usize,
             S: Chars,
         }
-        let limit = if N % 2 == 0 { N / 2 } else { N / 2 + 1 };
-        let mut dp = vec![vec![vec![0; 2]; 26]; limit+1];
-        for i in 0..26 {
-            if alpha_tabel[i] < S[0] && alpha_tabel[i] < S[N-1] {
-                dp[1][i][0] += 1;
-            } else if (alpha_tabel[i] < S[0] && alpha_tabel[i] == S[N-1]) || (alpha_tabel[i] == S[0] && alpha_tabel[i] < S[N-1]) || (alpha_tabel[i] == S[0] && alpha_tabel[i] == S[N-1]) {
-                dp[1][i][1] += 1;
-            }
-        }
-        for i in 1..limit {
-            for j in 0..26 {
-                for k in 0..26 {
-                    for m in 0..2{
-                        if m == 0 {
-                            // なんでもOK
-                            dp[i+1][j][m] += dp[i][k][0] + dp[i][k][1];
-                            dp[i+1][j][m] %= MOD;
-                        } else {
-                            // ギリギリを攻める
-                            if alpha_tabel[j] < S[i] && alpha_tabel[j] < S[N-i-1] {
-                                dp[i+1][j][0] += dp[i][k][0] + dp[i][k][1];
-                                dp[i+1][j][0] %= MOD;
-                            } else if (alpha_tabel[j] < S[i] && alpha_tabel[j] == S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] < S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] == S[N-i-1]) {
-                                dp[i+1][j][1] += dp[i][k][1];
-                                dp[i+1][j][1] %= MOD;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // for i in 1..limit {
-        //     for j in 0..26 {
-        //         for k in 0..26 {
-        //             if alpha_tabel[j] < S[i] && alpha_tabel[j] < S[N-i-1] {
-        //                 // dp[i+1][j][0] += dp[i][k][0];
-        //                 dp[i+1][j][0] += dp[i][k][1];
-        //                 dp[i+1][j][0] %= MOD;
-        //             } else if (alpha_tabel[j] < S[i] && alpha_tabel[j] == S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] < S[N-i-1]) || (alpha_tabel[j] == S[i] && alpha_tabel[j] == S[N-i-1]) {
-        //                 dp[i+1][j][1] += dp[i][k][1];
-        //                 dp[i+1][j][1] %= MOD;
-        //             }
-        //             dp[i+1][j][0] += dp[i][k][0];
-        //             dp[i+1][j][0] %= MOD;
-        //         }
-        //     }
-        // }
         let mut ans = 0;
-        for i in 0..26 {
-            ans += dp[limit][i][0] + dp[limit][i][1];
+        let limit = (N-1)/2;
+        for i in 0..=limit {
+            ans *= 26;
+            ans %= MOD;
+            ans += alpha_tabel[&S[i]];
             ans %= MOD;
         }
-        println!("{}", ans);
+        let target = S.iter().collect::<String>();
+        let mut rev_target = S.to_vec();
+        let mut i = 0; let mut j = N-1;
+        while i<j {
+            rev_target[j] = rev_target[i];
+            i+=1;j-=1;
+        }
+        let rev_target = rev_target.iter().collect::<String>();
+        if target >= rev_target {
+            ans += 1;
+            ans %= MOD;
+        }
+        println!("{}",ans);
     }
 }
