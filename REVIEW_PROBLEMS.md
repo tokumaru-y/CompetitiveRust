@@ -9,3 +9,4 @@ https://atcoder.jp/contests/abc248/tasks/abc248_e
 https://atcoder.jp/contests/abc245/tasks/abc245_d
 https://atcoder.jp/contests/abc245/tasks/abc245_e
 https://atcoder.jp/contests/abc243/tasks/abc243_d
+https://atcoder.jp/contests/abc242/tasks/abc242_d
