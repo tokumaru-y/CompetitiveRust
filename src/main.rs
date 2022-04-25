@@ -2,57 +2,38 @@ use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 use std::ops::Bound::Included;
 use proconio::{input, marker::Chars};
 
+const Limit: usize = 2*10_001;
 fn main() {
     input! {
-        mut Q: usize,
+        N: usize,
+        mut K: usize,
+        A: [usize; N],
     }
-    let mut upper_tree = BTreeMap::new();
-    while Q > 0 {
-        Q -= 1;
-        input! {
-            q: usize,
-        }
-        if q == 1 {
-            input!{
-                target_num : usize,
+    let mut passed_index = vec![Limit; N];
+    let mut pre_index = 0;
+    let mut sum_list = vec![0usize; N];
+    let mut ans:usize = 0;
+    let mut cnt = 0;
+    while K > 0 {
+        let now_index = ans % N;
+        if passed_index[now_index] != Limit {
+            let circle_cnt = passed_index[pre_index] - passed_index[now_index] + 1;
+            let add = sum_list[pre_index] - sum_list[now_index] + A[now_index];
+            let div_cnt = K / circle_cnt;
+            ans += div_cnt * add;
+            K -= div_cnt * circle_cnt;
+            while K > 0 {
+                ans += A[ans%N];
+                K-=1;
             }
-            *upper_tree.entry(target_num).or_insert(0) += 1;
         } else {
-            input! {
-                target_num: usize,
-                mut cnt: usize,
-            }
-            if q == 2 {
-                let range = upper_tree.range((Included(1usize), Included(target_num))).rev();
-                let mut target = 0;
-                for (key, value) in range {
-                    if cnt <= 0 || cnt <= *value {
-                        println!("{}", *key);
-                        target = *key;
-                        cnt = 0;
-                        break;
-                    }
-                    cnt -= value;
-                }
-                if cnt > 0 {
-                    println!("-1");
-                }
-            } else {
-                let range = upper_tree.range((Included(target_num), Included(1000_000_000_000_000_010usize)));
-                let mut target = 0;
-                for (key, value) in range {
-                    if cnt <= 0 || cnt <= *value {
-                        println!("{}", *key);
-                        target = *key;
-                        cnt = 0;
-                        break;
-                    }
-                    cnt -= value;
-                }
-                if cnt > 0 {
-                    println!("-1");
-                }
-            }
+            passed_index[now_index] = cnt;
+            ans += A[now_index];
+            sum_list[now_index] += ans;
+            pre_index = now_index;
+            K -= 1;
         }
+        cnt += 1;
     }
+    println!("{}",ans);
 }
