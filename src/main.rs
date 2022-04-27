@@ -2,31 +2,39 @@ use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
 use std::ops::Bound::Included;
 use proconio::{input, marker::Chars};
 
-fn dfs(V: &Vec<Vec<usize>>, R: &mut Vec<usize>, L: &mut Vec<usize>, n: usize, p: i32, leaf_cnt: &mut usize){
-    L[n] = *leaf_cnt;
-    for nv in V[n].iter() {
-        if p >= 0 && *nv == p as usize { continue; }
-        dfs(V, R, L, *nv, n as i32, leaf_cnt);
+fn dfs(X: &Vec<usize>, to: &Vec<Vec<usize>>, list: &mut Vec<Vec<usize>>, v: usize, p: usize) {
+    for i in to[v].iter() {
+        if *i == p { continue; }
+        dfs(X, to, list, *i, v);
+        for j in 0..list[*i].len() {
+            let num = list[*i][j];
+            list[v].push(num); 
+        }
     }
-    if V[n].len() == 1 && p != -1 { *leaf_cnt += 1; }
-    R[n] = *leaf_cnt -1;
+    list[v].push(X[v]);
+    list[v].sort();
+    list[v].reverse();
+    let limit = if list[v].len() >= 20 { 20 } else { list[v].len() };
+    list[v] = list[v][0..limit].to_vec();
 }
 
 fn main() {
     input! {
         N: usize,
-        UV: [[usize; 2]; N-1],
+        Q: usize,
+        X: [usize; N],
+        AB: [[usize; 2]; N-1],
+        VK: [[usize; 2]; Q],
     }
-    let mut V = vec![Vec::new(); N];
-    for i in 0..N-1 {
-        let a = UV[i][0] - 1;
-        let b = UV[i][1] - 1;
-        V[a].push(b);V[b].push(a);
+    let mut to = vec![Vec::new(); N];
+    let mut list = vec![Vec::new(); N];
+    for ab in AB.iter() {
+        let a = ab[0] - 1;let b = ab[1] - 1;
+        to[a].push(b);to[b].push(a);
     }
-    let mut R = vec![0usize; N];
-    let mut L = vec![0usize; N];
-    dfs(&V, &mut R, &mut L, 0, -1, &mut 1);
-    for i in 0..N {
-        println!("{} {}", L[i], R[i]);
+    dfs(&X, &to, &mut list,0, 2*10_0001);
+    for vk in VK.iter() {
+        let v = vk[0] - 1;let k = vk[1] - 1;
+        println!("{}", list[v][k]);
     }
 }
