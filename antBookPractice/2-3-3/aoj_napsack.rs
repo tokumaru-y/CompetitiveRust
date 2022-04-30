@@ -1,7 +1,5 @@
 #[allow(unused_imports)]
 use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse, cmp::{max, min}};
-// #[allow(unused_imports)]
-// use proconio::input;
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -56,4 +54,19 @@ macro_rules! read_value {
 }
 
 fn main() {
+    input!{
+        N: usize,
+        W: usize,
+        VW: [[usize;2]; N]
+    }
+    let mut dp = vec![0; W+1];
+    for vm in VW.iter() {
+        let v = vm[0];let w = vm[1];
+        for i in 0..=W{
+            if w+i <= W {
+                dp[w+i] = max(dp[w+i], dp[i] + v);
+            }
+        }
+    }
+    println!("{}", dp.iter().max().unwrap());
 }
