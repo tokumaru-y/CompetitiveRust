@@ -2,56 +2,31 @@
 use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse, cmp::{max, min}};
 #[allow(unused_imports)]
 use proconio::input;
-// reference: https://github.com/rust-lang-ja/ac-library-rs/blob/master/src/dsu.rs
-struct UnionFind {
-    node: usize,
-    parent_or_size: Vec<isize>,
-}
-
-impl UnionFind {
-    pub fn new(size: usize) -> Self {
-        Self {
-            node: size,
-            parent_or_size: vec![-1; size]
-        }
-    }
-
-    pub fn is_same(&mut self, x: usize, y: usize) -> bool {
-        self.root(x) == self.root(y)
-    }
-
-    pub fn root(&mut self, x: usize) -> usize {
-        if self.parent_or_size[x] < 0 {
-            return x;
-        }
-        self.parent_or_size[x] = self.root(self.parent_or_size[x] as usize) as isize;
-        self.parent_or_size[x] as usize
-    }
-
-    pub fn unite(&mut self, x: usize, y: usize) -> usize {
-        let (mut a, mut b) = (self.root(x), self.root(y));
-        if a == b {
-            return a;
-        }
-        if -self.parent_or_size[a] < -self.parent_or_size[b] {
-            std::mem::swap(&mut a, &mut b);
-        }
-        self.parent_or_size[a] += self.parent_or_size[b];
-        self.parent_or_size[b] = a as isize;
-        a
-    }
-}
 
 fn main() {
-    input! {
+    input!{
         N: usize,
-        Q: usize,
-        LR: [[usize; 2]; Q],
+        M: usize,
+        H: [usize; N],
+        UV: [[usize; 2]; M]
     }
-    let mut tree = UnionFind::new(N+1);
-    for lr in LR.iter() {
-        tree.unite(lr[0]-1, lr[1]);
+    let mut graph = vec![Vec::new(); N];
+    for uv in UV.iter() {
+        let u = uv[0] - 1;let v = uv[1] - 1;
+        graph[u].push(v);graph[v].push(u);
     }
-    let ans = if tree.is_same(0, N) { "Yes" } else { "No" };
-    println!("{}",ans);
+    let mut seen = vec![-2*1000_000_000; N];
+    let mut deque = VecDeque::new();
+    seen[0] = 0;
+    deque.push_back(0);
+    while deque.len() > 0 {
+        let next = deque.pop_front().unwrap();
+        for v in graph[next].iter() {
+            let cost: i128 = if H[next] >= H[*v] { (H[next] - H[*v]) as i128 } else { 2*(H[next] as i128 - H[*v] as i128)};
+            if seen[next] as i128 + cost <= seen[*v] { continue; }
+            seen[*v] = seen[next] as i128 + cost;
+            deque.push_back(*v);
+        }
+    }
+    println!("{}", seen.iter().max().unwrap());
 }
