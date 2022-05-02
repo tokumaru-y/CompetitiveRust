@@ -19,3 +19,4 @@ https://atcoder.jp/contests/abc238/tasks/abc238_d
 ### 2022/05
 https://atcoder.jp/contests/abc238/tasks/abc238_e
 https://atcoder.jp/contests/arc074/tasks/arc074_b
+https://atcoder.jp/contests/abc049/tasks/arc065_b
