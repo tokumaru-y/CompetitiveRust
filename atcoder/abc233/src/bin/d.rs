@@ -10,15 +10,14 @@ fn main() {
         A: [isize; N],
     }
     let mut sum_list = vec![0; N+1];
-    let mut map:BTreeMap<isize, usize> = BTreeMap::new();
-    for i in 0..N {
-        sum_list[i+1] = sum_list[i] + A[i];
-    }
-    let mut ans = 0;
+    for i in 0..N { sum_list[i+1] = sum_list[i] + A[i]; }
+    let mut map = BTreeMap::new();
+    // annotationをしないと,i32型になる。
+    // そうした場合、Σ20000の時にオーバーフローしてしまうのでusizeに変更
+    let mut ans:usize = 0;
     for i in 0..=N{
         ans += map.get(&(sum_list[i])).unwrap_or_else(|| &0);
-        *map.entry(sum_list[i] + K).or_insert(0) += 1;
+        *map.entry(sum_list[i]+K).or_insert(0) += 1;
     }
     println!("{}",ans);
-
 }
