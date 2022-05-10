@@ -36,3 +36,5 @@ https://atcoder.jp/contests/abc231/tasks/abc231_d
 https://atcoder.jp/contests/abc250/tasks/abc250_c
 https://atcoder.jp/contests/abc250/tasks/abc250_d
 https://atcoder.jp/contests/abc250/tasks/abc250_e
+https://atcoder.jp/contests/abc230/tasks/abc230_c
+https://atcoder.jp/contests/abc230/tasks/abc230_e
