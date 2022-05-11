@@ -40,3 +40,4 @@ https://atcoder.jp/contests/abc230/tasks/abc230_c
 https://atcoder.jp/contests/abc230/tasks/abc230_e
 https://atcoder.jp/contests/abc229/tasks/abc229_d
 https://atcoder.jp/contests/abc229/tasks/abc229_e
+https://atcoder.jp/contests/abc228/tasks/abc228_d
