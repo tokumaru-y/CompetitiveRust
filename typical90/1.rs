@@ -1,3 +1,4 @@
+// https://atcoder.jp/contests/typical90/tasks/typical90_a
 #[allow(unused_imports)]
 use proconio::{
     input,
