@@ -48,10 +48,10 @@ impl UnionFind {
         let mut roots = vec![0; self.node];
         let mut group_size = vec![0; self.node];
         for i in 0..self.node {
-            roots[i] = self.root(i)
+            roots[i] = self.root(i);
             group_size[roots[i]] += 1;
         }
-        let mut res = vec![Vec::new(), self.node];
+        let mut res = vec![Vec::new(); self.node];
         for i in 0..self.node {
             res[i].reserve(group_size[i]);
         }
@@ -59,6 +59,8 @@ impl UnionFind {
             res[roots[i]].push(i);
         }
 
-        res.into_iter().filter(|x| !x.is_empty()).collect::<Vec<Vec<usize>>>()
+        res.into_iter()
+            .filter(|x| !x.is_empty())
+            .collect::<Vec<Vec<usize>>>()
     }
 }
