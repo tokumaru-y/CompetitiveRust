@@ -1,3 +1,4 @@
+// https://atcoder.jp/contests/abc126/tasks/abc126_d
 #[allow(unused_imports)]
 use itertools::Itertools;
 #[allow(unused_imports)]
