@@ -1,4 +1,5 @@
-fn divisor(n: &usize) -> HashMap<usize, usize>{
+// 素因数分解
+fn divisor(n: &usize) -> HashMap<usize, usize> {
     let mut res = HashMap::new();
     let mut num = *n;
     for i in 2..=((*n as f64).sqrt() as usize) {
@@ -7,7 +8,9 @@ fn divisor(n: &usize) -> HashMap<usize, usize>{
             num /= i
         }
     }
-    if num != 1 && num > 0 { *res.entry(num).or_insert(0) += 1; }
+    if num != 1 && num > 0 {
+        *res.entry(num).or_insert(0) += 1;
+    }
     res
 }
 
@@ -16,8 +19,12 @@ fn divisor_list(n: &usize) -> Vec<usize> {
     for i in 1..=((*n as f64).sqrt() as usize) {
         if n % i == 0 {
             res.push(i);
-            if i != n/i {res.push(n/i);}
+            if i != n / i {
+                res.push(n / i);
+            }
         }
     }
     res
 }
+
+//
