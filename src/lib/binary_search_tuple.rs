@@ -9,3 +9,20 @@ fn neighbors(tree: &BTreeSet<isize>, val: isize) -> (Option<&isize>, Option<&isi
 
     (before.next_back(), after.next())
 }
+
+// x以上の値の中で、最も左側にあるindexを返す。
+fn lower_bound<T: std::cmp::PartialOrd>(vec: &Vec<T>, x: T) -> usize {
+    let mut is_ng: isize = -1;
+    let mut is_ok: isize = vec.len() as isize;
+    while (is_ok - is_ng).abs() > 1 {
+        let mid = (is_ok + is_ng) / 2;
+
+        if x <= vec[mid as usize] {
+            is_ok = mid;
+        } else {
+            is_ng = mid;
+        }
+    }
+
+    is_ok as usize
+}
