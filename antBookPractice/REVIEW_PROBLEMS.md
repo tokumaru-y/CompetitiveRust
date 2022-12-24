@@ -13,3 +13,4 @@ https://atcoder.jp/contests/abc061/tasks/abc061_d
 # 中級
 https://atcoder.jp/contests/arc037/tasks/arc037_c
 https://atcoder.jp/contests/abc023/tasks/abc023_d
+https://atcoder.jp/contests/arc050/tasks/arc050_b
