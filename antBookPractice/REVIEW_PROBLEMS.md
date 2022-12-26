@@ -17,3 +17,4 @@ https://atcoder.jp/contests/arc050/tasks/arc050_b
 https://atcoder.jp/contests/code-festival-2015-quala/tasks/codefestival_2015_qualA_d
 https://atcoder.jp/contests/abc034/tasks/abc034_d
 https://atcoder.jp/contests/abc017/tasks/abc017_4
+https://atcoder.jp/contests/arc088/tasks/arc088_b
