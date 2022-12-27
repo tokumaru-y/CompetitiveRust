@@ -19,3 +19,5 @@ https://atcoder.jp/contests/abc034/tasks/abc034_d
 https://atcoder.jp/contests/abc017/tasks/abc017_4
 https://atcoder.jp/contests/arc088/tasks/arc088_b
 https://atcoder.jp/contests/abc018/tasks/abc018_4
+// 間違いではないけど一応もう一度押さえておきたい
+https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_H
