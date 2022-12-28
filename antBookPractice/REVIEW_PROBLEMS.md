@@ -22,3 +22,4 @@ https://atcoder.jp/contests/abc018/tasks/abc018_4
 // 間違いではないけど一応もう一度押さえておきたい
 https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_H
 https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_e
+https://atcoder.jp/contests/joisc2011/tasks/joisc2011_bookshelf
