@@ -72,12 +72,12 @@ fn main() {
     }
 
     for h in 0..=len_h {
-        for w in 1..len_w {
+        for w in 1..=len_w {
             grid[h][w] += grid[h][w - 1];
         }
     }
     for w in 0..=len_w {
-        for h in 1..len_h {
+        for h in 1..=len_h {
             grid[h][w] += grid[h - 1][w];
         }
     }
