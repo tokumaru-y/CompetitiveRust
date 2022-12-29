@@ -18,9 +18,10 @@ impl SegmentTree {
         for i in 0..len {
             node[i + n - 1] = v[i];
         }
-
-        for i in (0..=(n - 2)).rev() {
-            node[i] = min(node[2 * i + 1], node[2 * i + 2]);
+        if n > 1 {
+            for i in (0..=(n - 2)).rev() {
+                node[i] = min(node[2 * i + 1], node[2 * i + 2]);
+            }
         }
 
         Self {
@@ -70,6 +71,7 @@ impl LazyAddSegmentTree {
     pub fn new(v: Vec<usize>) -> Self {
         let len = v.len();
         let mut n = 1;
+        // assert!(v.len() > 1, "Not allowed Vector's length 1");
         while n < len {
             n *= 2;
         }
@@ -80,8 +82,10 @@ impl LazyAddSegmentTree {
         for i in (0..len) {
             node[i + n - 1] = v[i];
         }
-        for i in (0..(n - 2)).rev() {
-            node[i] = node[i * 2 + 1] + node[i * 2 + 2];
+        if n > 1 {
+            for i in (0..(n - 2)).rev() {
+                node[i] = node[i * 2 + 1] + node[i * 2 + 2];
+            }
         }
 
         Self {
@@ -106,8 +110,8 @@ impl LazyAddSegmentTree {
         }
     }
 
-    pub fn add(&self, a: usize, b: usize) {
-        self._add(a, b, 0, 0, self.N)
+    pub fn add(&mut self, a: usize, b: usize, v: usize) {
+        self._add(a, b, v, 0, 0, self.N)
     }
 
     // [a,b)に対して、vを加算する。
@@ -121,36 +125,35 @@ impl LazyAddSegmentTree {
 
         if (a <= l && r <= b) {
             self.lazy[k] += (r - l) * v;
-            eval(k, l, r);
+            self.eval(k, l, r);
         } else {
-            self.add(a, b, v, 2 * k + 1, l, (l + r) / 2);
-            self.add(a, b, v, 2 * k + 2, (l + r) / 2, r);
+            self._add(a, b, v, 2 * k + 1, l, (l + r) / 2);
+            self._add(a, b, v, 2 * k + 2, (l + r) / 2, r);
 
             self.node[k] = self.node[2 * k + 1] + self.node[2 * k + 2];
         }
     }
 
-    pub fn query(&self, a: usize, b: usize) -> usize {
+    pub fn query(&mut self, a: usize, b: usize) -> usize {
         self._query(a, b, 0, 0, self.N)
     }
 
-    fn _query(&self, a: usize, b: usize, k: usize, l: usize, r: usize) -> usize {
+    fn _query(&mut self, a: usize, b: usize, k: usize, l: usize, r: usize) -> usize {
         if (b <= l || r <= a) {
             return 0;
         }
 
         self.eval(k, l, r);
         if (a <= l && r <= b) {
-            return node[k];
+            return self.node[k];
         }
 
-        let sum_left = self.query(a, b, 2 * k + 1, l, (l + r) / 2);
-        let sum_right = self.query(a, b, 2 * k + 2, (l + r) / 2, r);
+        let sum_left = self._query(a, b, 2 * k + 1, l, (l + r) / 2);
+        let sum_right = self._query(a, b, 2 * k + 2, (l + r) / 2, r);
 
         sum_left + sum_right
     }
 }
-
 struct LazyUpdateSegmentTree {
     N: usize,
     node: Vec<usize>,
@@ -174,8 +177,10 @@ impl LazyUpdateSegmentTree {
         for i in (0..len) {
             node[i + n - 1] = v[i];
         }
-        for i in (0..(n - 2)).rev() {
-            node[i] = node[i * 2 + 1] + node[i * 2 + 2];
+        if n > 1 {
+            for i in (0..(n - 2)).rev() {
+                node[i] = node[i * 2 + 1] + node[i * 2 + 2];
+            }
         }
 
         Self {
