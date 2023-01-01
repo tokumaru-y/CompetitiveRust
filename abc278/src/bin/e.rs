@@ -31,66 +31,56 @@ fn main() {
         N: usize,
         range_h: usize,
         range_w: usize,
-        A: [[usize; W]; H],
+        A: [[usize; W]; H]
     }
-    let mut ans = vec![];
+    let mut minh = vec![10usize.pow(6); N + 1];
+    let mut minw = vec![10usize.pow(6); N + 1];
+    let mut maxh = vec![0; N + 1];
+    let mut maxw = vec![0; N + 1];
     let mut cnt_table = vec![0; N + 1];
     let mut all_kinds = 0;
+    let mut ans = vec![vec![0; W - range_w + 1]; H - range_h + 1];
 
     for h in 0..H {
         for w in 0..W {
-            if cnt_table[A[h][w]] == 0 {
+            let target = A[h][w];
+            minh[target] = min(minh[target], h);
+            minw[target] = min(minw[target], w);
+            maxh[target] = max(maxh[target], h);
+            maxw[target] = max(maxw[target], w);
+            if cnt_table[target] == 0 {
                 all_kinds += 1;
             }
-            cnt_table[A[h][w]] += 1;
+            cnt_table[target] += 1;
         }
     }
 
-    for h in 0..=(H - range_h) {
-        for w in 0..=(W - range_w) {
-            if w == 0 {
-                for x in 0..range_h {
-                    for y in 0..range_w {
-                        let target = A[h + x][w + y];
-                        cnt_table[target] -= 1;
-                        if cnt_table[target] == 0 {
-                            all_kinds -= 1;
+    for h in 0..(H - range_h + 1) {
+        for w in 0..(W - range_w + 1) {
+            let mut dif = 0;
+            let mut tmp_table = cnt_table.clone();
+
+            for x in 0..range_h {
+                for y in 0..range_w {
+                    let target = A[h + x][w + y];
+
+                    if (h <= minh[target]
+                        && maxh[target] < h + range_h
+                        && w <= minw[target]
+                        && maxw[target] < w + range_w)
+                    {
+                        tmp_table[target] -= 1;
+                        if tmp_table[target] == 0 {
+                            dif += 1;
                         }
                     }
                 }
-                ans.push(vec![all_kinds]);
-            } else {
-                for x in h..=(h + range_h - 1) {
-                    let target = A[x][w - 1];
-                    if cnt_table[target] == 0 {
-                        all_kinds += 1;
-                    }
-                    cnt_table[target] += 1;
-
-                    let target = A[x][w + range_w - 1];
-                    cnt_table[target] -= 1;
-                    if cnt_table[target] == 0 {
-                        all_kinds -= 1;
-                    }
-                }
-
-                ans[h].push(all_kinds);
             }
-            if w == W - range_w {
-                for x in 0..range_h {
-                    for y in 0..range_w {
-                        let target = A[h + x][w + y];
-                        if cnt_table[target] == 0 {
-                            all_kinds += 1;
-                        }
-                        cnt_table[target] += 1;
-                    }
-                }
-            }
+            ans[h][w] = all_kinds - dif;
         }
     }
 
-    for h in 0..ans.len() {
+    for h in 0..(H - range_h + 1) {
         println!("{}", ans[h].iter().join(" "));
     }
 }
