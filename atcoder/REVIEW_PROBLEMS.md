@@ -5,3 +5,4 @@ https://atcoder.jp/contests/abc278/tasks/abc278_e
 https://atcoder.jp/contests/abc274/tasks/abc274_d
 // attention
 https://atcoder.jp/contests/abc273/tasks/abc273_d
+https://atcoder.jp/contests/arc150/tasks/arc150_a
