@@ -11,6 +11,7 @@ fn neighbors(tree: &BTreeSet<isize>, val: isize) -> (Option<&isize>, Option<&isi
 }
 
 // x以上の値の中で、最も左側にあるindexを返す。
+// vecに対象が存在しない場合はv.lenを返す
 fn lower_bound<T: std::cmp::PartialOrd>(vec: &Vec<T>, x: T) -> usize {
     let mut is_ng: isize = -1;
     let mut is_ok: isize = vec.len() as isize;
@@ -28,6 +29,7 @@ fn lower_bound<T: std::cmp::PartialOrd>(vec: &Vec<T>, x: T) -> usize {
 }
 
 // xより大きい要素の一番左のindexを返す。
+// vecに対象が存在しない場合はv.lenを返す
 fn upper_bound<T: std::cmp::PartialOrd>(vec: &Vec<T>, x: T) -> usize {
     let mut is_ng: isize = -1;
     let mut is_ok: isize = vec.len() as isize;
