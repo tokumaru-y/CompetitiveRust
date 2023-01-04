@@ -7,3 +7,4 @@ https://atcoder.jp/contests/abc274/tasks/abc274_d
 https://atcoder.jp/contests/abc273/tasks/abc273_d
 https://atcoder.jp/contests/arc150/tasks/arc150_a
 https://atcoder.jp/contests/arc149/tasks/arc149_a
+https://atcoder.jp/contests/arc149/tasks/arc149_b
