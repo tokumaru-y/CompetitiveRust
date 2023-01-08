@@ -40,15 +40,17 @@ fn main() {
         mut P: [usize; N]
     }
     let mut ans = vec![];
+
     for i in 0..N {
         for j in 0..(N - 2) {
-            if P[j] % 2 != P[j + 2] % 2 && P[j] % 2 != j % 2 {
+            if P[j] % 2 != P[j + 2] % 2 && P[j] % 2 == j % 2 {
                 ans.push(('B', j + 1));
                 P.swap(j, j + 2);
             }
         }
     }
-    for i in 0..(N - 1) {
+
+    for i in 0..N {
         if P[i] % 2 == i % 2 {
             ans.push(('A', i + 1));
             P.swap(i, i + 1);
@@ -65,7 +67,7 @@ fn main() {
     }
 
     println!("{}", ans.len());
-    for (a, b) in ans.into_iter() {
-        println!("{} {}", a, b);
+    for (x, y) in ans.into_iter() {
+        println!("{} {}", x, y);
     }
 }
