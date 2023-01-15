@@ -18,3 +18,4 @@ https://atcoder.jp/contests/abc254/tasks/abc254_d
 https://atcoder.jp/contests/abc253/tasks/abc253_e
 https://atcoder.jp/contests/abc252/tasks/abc252_d
 https://atcoder.jp/contests/arc140/tasks/arc140_a
+https://atcoder.jp/contests/arc138/tasks/arc138_b
