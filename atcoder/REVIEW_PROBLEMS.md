@@ -21,3 +21,4 @@ https://atcoder.jp/contests/arc140/tasks/arc140_a
 https://atcoder.jp/contests/arc138/tasks/arc138_b
 https://atcoder.jp/contests/arc137/tasks/arc137_b
 https://atcoder.jp/contests/arc134/tasks/arc134_b
+https://atcoder.jp/contests/arc131/tasks/arc131_c
