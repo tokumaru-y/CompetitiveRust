@@ -25,3 +25,4 @@ https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_e
 https://atcoder.jp/contests/joisc2011/tasks/joisc2011_bookshelf
 https://atcoder.jp/contests/indeednow-finalb-open/tasks/indeednow_2015_finalb_e
 https://atcoder.jp/contests/joi2017yo/tasks/joi2017yo_d
+https://atcoder.jp/contests/yahoo-procon2018-qual/tasks/yahoo_procon2018_qual_c
