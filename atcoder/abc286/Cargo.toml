@@ -1,49 +1,49 @@
 [package]
-name = "abc222"
+name = "abc286"
 version = "0.1.0"
 edition = "2018"
 
 [package.metadata.cargo-compete.bin]
-abc222-a = { alias = "a", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_a" }
-abc222-b = { alias = "b", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_b" }
-abc222-c = { alias = "c", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_c" }
-abc222-d = { alias = "d", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_d" }
-abc222-e = { alias = "e", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_e" }
-abc222-f = { alias = "f", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_f" }
-abc222-g = { alias = "g", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_g" }
-abc222-h = { alias = "h", problem = "https://atcoder.jp/contests/abc222/tasks/abc222_h" }
+abc286-a = { alias = "a", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_a" }
+abc286-b = { alias = "b", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_b" }
+abc286-c = { alias = "c", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_c" }
+abc286-d = { alias = "d", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_d" }
+abc286-e = { alias = "e", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_e" }
+abc286-ex = { alias = "ex", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_h" }
+abc286-f = { alias = "f", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_f" }
+abc286-g = { alias = "g", problem = "https://atcoder.jp/contests/abc286/tasks/abc286_g" }
 
 [[bin]]
-name = "abc222-a"
+name = "abc286-a"
 path = "src/bin/a.rs"
 
 [[bin]]
-name = "abc222-b"
+name = "abc286-b"
 path = "src/bin/b.rs"
 
 [[bin]]
-name = "abc222-c"
+name = "abc286-c"
 path = "src/bin/c.rs"
 
 [[bin]]
-name = "abc222-d"
+name = "abc286-d"
 path = "src/bin/d.rs"
 
 [[bin]]
-name = "abc222-e"
+name = "abc286-e"
 path = "src/bin/e.rs"
 
 [[bin]]
-name = "abc222-f"
+name = "abc286-ex"
+path = "src/bin/ex.rs"
+
+[[bin]]
+name = "abc286-f"
 path = "src/bin/f.rs"
 
 [[bin]]
-name = "abc222-g"
+name = "abc286-g"
 path = "src/bin/g.rs"
-
-[[bin]]
-name = "abc222-h"
-path = "src/bin/h.rs"
 
 [dependencies]
 num = "=0.2.1"
