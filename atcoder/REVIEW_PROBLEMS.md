@@ -33,3 +33,4 @@ https://atcoder.jp/contests/arc121/tasks/arc121_b
 https://atcoder.jp/contests/arc120/tasks/arc120_b
 https://atcoder.jp/contests/abc202/tasks/abc202_d
 https://atcoder.jp/contests/arc119/tasks/arc119_b
+https://atcoder.jp/contests/arc118/tasks/arc118_b
