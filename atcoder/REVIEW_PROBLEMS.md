@@ -35,3 +35,4 @@ https://atcoder.jp/contests/arc119/tasks/arc119_b
 https://atcoder.jp/contests/arc118/tasks/arc118_b
 https://atcoder.jp/contests/abc287/tasks/abc287_e
 https://atcoder.jp/contests/arc118/tasks/arc118_c
+https://atcoder.jp/contests/arc116/tasks/arc116_b
