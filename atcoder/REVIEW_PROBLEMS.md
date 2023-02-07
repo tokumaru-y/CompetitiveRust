@@ -45,3 +45,4 @@ https://atcoder.jp/contests/arc110/tasks/arc110_c
 https://atcoder.jp/contests/arc109/tasks/arc109_c
 https://atcoder.jp/contests/panasonic2020/tasks/panasonic2020_d
 https://atcoder.jp/contests/abc156/tasks/abc156_d
+https://atcoder.jp/contests/abc152/tasks/abc152_d
