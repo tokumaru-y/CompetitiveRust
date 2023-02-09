@@ -47,3 +47,4 @@ https://atcoder.jp/contests/panasonic2020/tasks/panasonic2020_d
 https://atcoder.jp/contests/abc156/tasks/abc156_d
 https://atcoder.jp/contests/abc152/tasks/abc152_d
 https://atcoder.jp/contests/abc148/tasks/abc148_e
+https://atcoder.jp/contests/abc145/tasks/abc145_d
