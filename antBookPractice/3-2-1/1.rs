@@ -1,4 +1,3 @@
-// https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C&lang=jp
 #[allow(unused_imports)]
 use std::{
     cmp::Reverse,
@@ -70,30 +69,24 @@ fn main() {
         N: usize,
         Q: usize,
         A: [usize; N],
-        X: [usize; Q]
+        X: [usize; Q],
     }
-
-    for q in X.into_iter() {
+    for x in X.into_iter() {
         let mut ans = 0;
-
-        let mut right = 0;
         let mut sum = 0;
-
+        let mut right = 0;
         for left in 0..N {
-            while right < N && sum + A[right] <= q {
+            while right < N && sum + A[right] <= x {
                 sum += A[right];
                 right += 1;
             }
-
             ans += right - left;
-
-            if right == left {
+            if left == right {
                 right += 1;
             } else {
                 sum -= A[left];
             }
         }
-
         println!("{}", ans);
     }
 }
