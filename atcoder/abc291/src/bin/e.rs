@@ -1,12 +1,10 @@
 #[allow(unused_imports)]
 use itertools::Itertools;
-use petgraph::graphmap;
 #[allow(unused_imports)]
 use proconio::{
     input,
     marker::{Chars, Isize1, Usize1},
 };
-use rand::seq::index;
 #[allow(unused_imports)]
 use std::{
     cmp::Reverse,
@@ -15,6 +13,7 @@ use std::{
     process::exit,
 };
 use std::{
+    f32::consts::E,
     fmt::Debug,
     io::{stdout, Write},
     mem::swap,
@@ -41,54 +40,50 @@ fn main() {
     input! {
         N: usize,
         M: usize,
-        XY: [(Usize1, Usize1); M]
+        mut XY: [(Usize1, Usize1); M]
     }
-    let mut index_list = vec![N + 1; N];
-    let mut set = BTreeSet::new();
-    let mut graph = vec![N + 1; N];
-    let mut is_edge_cnt = vec![0; N];
-    let mut has_edge_cnt = vec![0; N];
+    let mut edge_cnt = vec![0; N];
+    let mut graph = vec![vec![]; N];
+    let mut dag = vec![];
+    XY.sort();
+    XY.dedup();
 
-    for (x, y) in XY.into_iter() {
-        set.insert((x, y));
+    for (x, y) in XY.iter() {
+        graph[*y].push(*x);
+        edge_cnt[*x] += 1;
     }
-    for (x, y) in set.into_iter() {
-        graph[y] = x;
-        is_edge_cnt[x] += 1;
-        has_edge_cnt[y] += 1;
-    }
-
-    let mut is_ok = true;
-    let mut is_zero_cnt = 0;
-    let mut start_index = N + 1;
+    let mut in_list = VecDeque::new();
     for i in 0..N {
-        if is_edge_cnt[i] == 0 && has_edge_cnt[i] > 0 {
-            is_zero_cnt += 1;
-            start_index = i;
-        }
-
-        if is_edge_cnt[i] >= 2 || is_zero_cnt >= 2 || has_edge_cnt[i] >= 2 {
-            is_ok = false;
+        if edge_cnt[i] == 0 {
+            in_list.push_back(i);
+            dag.push(i);
         }
     }
-
-    if !is_ok {
+    while in_list.len() > 0 {
+        if in_list.len() >= 2 {
+            println!("No");
+            exit(0);
+        }
+        let x = in_list.pop_front().unwrap();
+        for nx in graph[x].iter() {
+            edge_cnt[*nx] -= 1;
+            if edge_cnt[*nx] == 0 {
+                in_list.push_back(*nx);
+                dag.push(*nx);
+            }
+        }
+    }
+    if dag.len() != N {
         println!("No");
         exit(0);
     }
 
-    let mut deque = VecDeque::new();
+    let mut ans = vec![0; N];
     let mut num = N;
-    deque.push_back(start_index);
-    while deque.len() > 0 {
-        let nx = deque.pop_back().unwrap();
-        index_list[nx] = num;
+    for i in 0..N {
+        ans[dag[i]] = num;
         num -= 1;
-        if graph[nx] == N + 1 {
-            break;
-        }
-        deque.push_back(graph[nx]);
     }
     println!("Yes");
-    println!("{}", index_list.into_iter().join(" "));
+    println!("{}", ans.into_iter().join(" "));
 }
