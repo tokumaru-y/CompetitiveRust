@@ -52,3 +52,5 @@ https://atcoder.jp/contests/agc038/tasks/agc038_a
 https://atcoder.jp/contests/abc140/tasks/abc140_d
 https://atcoder.jp/contests/abc134/tasks/abc134_d
 https://atcoder.jp/contests/abc290/tasks/abc290_d
+### 2022/3
+https://atcoder.jp/contests/abc125/tasks/abc125_c
