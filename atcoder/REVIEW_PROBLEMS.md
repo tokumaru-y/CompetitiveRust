@@ -56,3 +56,4 @@ https://atcoder.jp/contests/abc290/tasks/abc290_d
 https://atcoder.jp/contests/abc125/tasks/abc125_c
 https://atcoder.jp/contests/abc124/tasks/abc124_d
 https://atcoder.jp/contests/abc121/tasks/abc121_d
+https://atcoder.jp/contests/abc115/tasks/abc115_d
