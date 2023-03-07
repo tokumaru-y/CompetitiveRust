@@ -25,11 +25,6 @@ fn unwrap_result_type<T: Debug>(x: Result<T, T>) -> T {
     }
 }
 
-fn read() -> usize {
-    let mut buf = String::new();
-    std::io::stdin().read_line(&mut buf).unwrap();
-    buf.trim().parse::<usize>().unwrap()
-}
 const DXY: [(isize, isize); 4] = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 const FIRST_VALUE: usize = std::usize::MAX;
 const MOD: usize = 1_000_000_007;
