@@ -1,8 +1,3 @@
-use proconio::input;
-
-fn main() {
-    todo!();
-}
 #[allow(unused_imports)]
 use itertools::Itertools;
 #[allow(unused_imports)]
@@ -40,18 +35,18 @@ fn main() {
         N: usize,
         A: [isize; N]
     }
-    let mut sum_v = vec![0; N + 1];
+    let mut sum_v = vec![0isize; N + 1];
     let mut ans = 0;
     for i in 0..N {
         sum_v[i + 1] = sum_v[i] + A[i];
     }
-    let mut table = HashMap::new();
+    let mut table: HashMap<isize, usize> = HashMap::new();
 
     for i in 0..=N {
         if table.contains_key(&sum_v[i]) {
             ans += table.get(&sum_v[i]).unwrap();
         }
-        *table.entry(&sum_v[i]).or_insert(0) += 1;
+        *table.entry(sum_v[i]).or_insert(0) += 1;
     }
 
     println!("{}", ans);
