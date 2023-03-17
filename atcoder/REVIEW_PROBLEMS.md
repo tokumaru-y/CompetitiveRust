@@ -61,3 +61,4 @@ https://atcoder.jp/contests/tenka1-2018/tasks/tenka1_2018_c
 https://atcoder.jp/contests/abc110/tasks/abc110_c
 https://atcoder.jp/contests/abc102/tasks/arc100_a
 https://atcoder.jp/contests/agc023/tasks/agc023_a
+https://atcoder.jp/contests/abc094/tasks/arc095_b
