@@ -66,3 +66,4 @@ https://atcoder.jp/contests/abc090/tasks/arc091_bhttps://atcoder.jp/contests/apc
 https://atcoder.jp/contests/apc001/tasks/apc001_c
 https://atcoder.jp/contests/cf17-final/tasks/cf17_final_b
 https://atcoder.jp/contests/code-festival-2017-qualc/tasks/code_festival_2017_qualc_c
+https://atcoder.jp/contests/code-festival-2017-quala/tasks/code_festival_2017_quala_b
