@@ -72,3 +72,4 @@ https://atcoder.jp/contests/agc017/tasks/agc017_a
 https://atcoder.jp/contests/agc016/tasks/agc016_a
 https://atcoder.jp/contests/abc064/tasks/abc064_d
 https://atcoder.jp/contests/abc051/tasks/abc051_c
+https://atcoder.jp/contests/cf16-final/tasks/codefestival_2016_final_b
