@@ -1,39 +1,63 @@
-use std::{collections::{BinaryHeap, HashMap, VecDeque, BTreeMap}, cmp::Reverse};
-use std::ops::Bound::Included;
-use proconio::{input, marker::Chars};
+#[allow(unused_imports)]
+use itertools::Itertools;
+#[allow(unused_imports)]
+use proconio::{
+    input,
+    marker::{Chars, Isize1, Usize1},
+};
+#[allow(unused_imports)]
+use std::{
+    cmp::Reverse,
+    cmp::{max, min},
+    collections::{BTreeMap, BTreeSet, BinaryHeap, HashMap, HashSet, VecDeque},
+    process::exit,
+};
+use std::{
+    fmt::Debug,
+    io::{stdout, Write},
+    mem::swap,
+};
+fn unwrap_result_type<T: Debug>(x: Result<T, T>) -> T {
+    if x.is_ok() {
+        x.unwrap()
+    } else {
+        x.unwrap_err()
+    }
+}
 
-const Limit: usize = 2*10_001;
+const DXY: [(isize, isize); 4] = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+const FIRST_VALUE: usize = std::usize::MAX;
+const MOD: usize = 1_000_000_007;
+
+#[allow(non_snake_case)]
 fn main() {
     input! {
         N: usize,
         mut K: usize,
-        A: [usize; N],
+        A: [usize; N]
     }
-    let mut passed_index = vec![Limit; N];
-    let mut pre_index = 0;
-    let mut sum_list = vec![0usize; N];
-    let mut ans:usize = 0;
-    let mut cnt = 0;
-    while K > 0 {
-        let now_index = ans % N;
-        if passed_index[now_index] != Limit {
-            let circle_cnt = passed_index[pre_index] - passed_index[now_index] + 1;
-            let add = sum_list[pre_index] - sum_list[now_index] + A[now_index];
-            let div_cnt = K / circle_cnt;
-            ans += div_cnt * add;
-            K -= div_cnt * circle_cnt;
-            while K > 0 {
-                ans += A[ans%N];
-                K-=1;
-            }
-        } else {
-            passed_index[now_index] = cnt;
-            ans += A[now_index];
-            sum_list[now_index] += ans;
-            pre_index = now_index;
-            K -= 1;
+    let mut dp = vec![vec![0usize; N + 1]; 61];
+
+    for i in 0..N {
+        dp[0][i] = A[i];
+    }
+
+    for i in 0..41 {
+        for j in 0..N {
+            dp[i + 1][j] = dp[i][j] + dp[i][(j + dp[i][j]) % N];
         }
-        cnt += 1;
     }
-    println!("{}",ans);
+
+    let mut ans = 0;
+    let mut idx = 0;
+    while K > 0 {
+        if K & 1 > 0 {
+            ans += dp[idx][ans % N];
+        }
+
+        K >>= 1;
+        idx += 1;
+    }
+
+    println!("{}", ans);
 }
