@@ -1,41 +1,72 @@
-use proconio::input;
-
+#[allow(unused_imports)]
+use itertools::Itertools;
+#[allow(unused_imports)]
+use proconio::{
+    input,
+    marker::{Chars, Isize1, Usize1},
+};
+#[allow(unused_imports)]
+use std::{
+    cmp::Reverse,
+    cmp::{max, min},
+    collections::{BTreeMap, BTreeSet, BinaryHeap, HashMap, HashSet, VecDeque},
+    process::exit,
+};
+use std::{
+    fmt::Debug,
+    io::{stdout, Write},
+    mem::swap,
+};
 fn main() {
     input! {
         N: usize,
-        L: usize,
-        K: usize,
-        mut A: [usize; N]
     }
-    let mut is_ok = 0usize;
-    let mut is_ng = L;
-    A.push(L);
-    let mut new_a = vec![A[0]];
-    for i in 0..N {
-        new_a.push(A[i + 1] - A[i])
+    if N % 2 == 1 {
+        println!("");
+        return;
     }
-    while is_ng - is_ok > 1 {
-        let check = (is_ok + is_ng) / 2;
-        if is_acceptable(check, &new_a, K) {
-            is_ok = check;
-        } else {
-            is_ng = check;
-        }
-    }
+    let mut ans = vec![];
+    let mut phrase = VecDeque::new();
+    dfs(&mut ans, &mut phrase, N);
 
-    println!("{:?}", is_ok);
+    ans.sort();
+    ans.dedup();
+    for a in ans.into_iter() {
+        println!("{}", a);
+    }
 }
 
-fn is_acceptable(n: usize, A: &Vec<usize>, K: usize) -> bool {
-    let mut leng = 0usize;
-    let mut cnt = 0;
-    for a in A.iter() {
-        leng += a;
-        if leng >= n {
-            cnt += 1;
-            leng = 0;
+fn dfs(ans: &mut Vec<String>, phrase: &mut VecDeque<char>, N: usize) {
+    if phrase.len() == N {
+        ans.push(phrase.clone().into_iter().collect());
+        return;
+    }
+
+    let mut same_vec = phrase.clone().into_iter().collect::<VecDeque<char>>();
+    let len = same_vec.len();
+    if len * 2 <= N && len > 0 {
+        phrase.append(&mut same_vec);
+        dfs(ans, phrase, N);
+        for _ in 0..len {
+            phrase.pop_back();
         }
     }
 
-    return cnt > K;
+    phrase.push_back('(');
+    phrase.push_back(')');
+    dfs(ans, phrase, N);
+    phrase.pop_back();
+    phrase.pop_back();
+
+    phrase.push_front(')');
+    phrase.push_front('(');
+    dfs(ans, phrase, N);
+    phrase.pop_front();
+    phrase.pop_front();
+
+    phrase.push_front('(');
+    phrase.push_back(')');
+    dfs(ans, phrase, N);
+    phrase.pop_back();
+    phrase.pop_front();
 }
