@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/typical90/tasks/typical90_b
+#[allow(unused_imports)]
+use itertools::Itertools;
 #[allow(unused_imports)]
 use proconio::{
     input,
@@ -8,50 +9,60 @@ use proconio::{
 use std::{
     cmp::Reverse,
     cmp::{max, min},
-    collections::{BTreeMap, BTreeSet, BinaryHeap, HashMap, VecDeque},
+    collections::{BTreeMap, BTreeSet, BinaryHeap, HashMap, HashSet, VecDeque},
+    process::exit,
 };
-
-fn dfs(mut left: usize, mut right: usize, ans_vct: &mut Vec<String>, str_b: String) {
-    if left == 0 && right == 0 {
-        ans_vct.push(str_b.clone());
-    } else {
-        let brancket = ["(", ")"];
-        for b in brancket.into_iter() {
-            if *b == "(" {
-                if left == 0 {
-                    continue;
-                }
-                left -= 1;
-                right += 1;
-                let s = str_b.clone() + b;
-                dfs(left, right, ans_vct, s);
-                left += 1;
-                right -= 1;
-            } else {
-                if right == 0 {
-                    continue;
-                }
-                right -= 1;
-                let s = str_b.clone() + b;
-                dfs(left, right, ans_vct, s);
-                right += 1;
-            }
-        }
-    }
-}
-#[allow(non_snake_case)]
+use std::{
+    fmt::Debug,
+    io::{stdout, Write},
+    mem::swap,
+};
 fn main() {
     input! {
-        N: usize
+        N: usize,
     }
     if N % 2 == 1 {
-        std::process::exit(0)
+        println!("");
+        return;
     }
-    let mut ans = Vec::new();
-    let mut left_branckets = N / 2;
-    let mut right_branckets = 0;
-    dfs(left_branckets, right_branckets, &mut ans, String::from(""));
-    for v in ans.into_iter() {
-        println!("{}", v);
+    let mut candidate = vec![];
+    for b in 0..(1 << N) {
+        let mut tmp = vec![];
+
+        for i in 0..N {
+            if b & 1 << i > 0 {
+                tmp.push(')');
+            } else {
+                tmp.push('(');
+            }
+        }
+        if is_acceptable(&tmp) {
+            candidate.push(tmp)
+        }
     }
+
+    candidate.sort();
+    for ans in candidate.into_iter() {
+        println!("{}", ans.into_iter().collect::<String>());
+    }
+}
+
+fn is_acceptable(t: &Vec<char>) -> bool {
+    let mut left = 0;
+    for c in t.iter() {
+        if *c == ')' {
+            if left == 0 {
+                return false;
+            }
+            left -= 1;
+        } else {
+            left += 1;
+        }
+    }
+
+    if left > 0 {
+        return false;
+    }
+
+    return true;
 }

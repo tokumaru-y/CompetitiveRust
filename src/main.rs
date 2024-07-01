@@ -25,48 +25,44 @@ fn main() {
         println!("");
         return;
     }
-    let mut ans = vec![];
-    let mut phrase = VecDeque::new();
-    dfs(&mut ans, &mut phrase, N);
+    let mut candidate = vec![];
+    for b in 0..(1 << N) {
+        let mut tmp = vec![];
 
-    ans.sort();
-    ans.dedup();
-    for a in ans.into_iter() {
-        println!("{}", a);
-    }
-}
-
-fn dfs(ans: &mut Vec<String>, phrase: &mut VecDeque<char>, N: usize) {
-    if phrase.len() == N {
-        ans.push(phrase.clone().into_iter().collect());
-        return;
-    }
-
-    let mut same_vec = phrase.clone().into_iter().collect::<VecDeque<char>>();
-    let len = same_vec.len();
-    if len * 2 <= N && len > 0 {
-        phrase.append(&mut same_vec);
-        dfs(ans, phrase, N);
-        for _ in 0..len {
-            phrase.pop_back();
+        for i in 0..N {
+            if b & 1 << i > 0 {
+                tmp.push(')');
+            } else {
+                tmp.push('(');
+            }
+        }
+        if is_acceptable(&tmp) {
+            candidate.push(tmp)
         }
     }
 
-    phrase.push_back('(');
-    phrase.push_back(')');
-    dfs(ans, phrase, N);
-    phrase.pop_back();
-    phrase.pop_back();
+    candidate.sort();
+    for ans in candidate.into_iter() {
+        println!("{}", ans.into_iter().collect::<String>());
+    }
+}
 
-    phrase.push_front(')');
-    phrase.push_front('(');
-    dfs(ans, phrase, N);
-    phrase.pop_front();
-    phrase.pop_front();
+fn is_acceptable(t: &Vec<char>) -> bool {
+    let mut left = 0;
+    for c in t.iter() {
+        if *c == ')' {
+            if left == 0 {
+                return false;
+            }
+            left -= 1;
+        } else {
+            left += 1;
+        }
+    }
 
-    phrase.push_front('(');
-    phrase.push_back(')');
-    dfs(ans, phrase, N);
-    phrase.pop_back();
-    phrase.pop_front();
+    if left > 0 {
+        return false;
+    }
+
+    return true;
 }
