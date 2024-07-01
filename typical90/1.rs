@@ -28,7 +28,7 @@ fn main() {
 
 fn is_acceptable(n: usize, A: &Vec<usize>, K: usize) -> bool {
     let mut leng = 0usize;
-    let mut cnt = 0;
+    let mut cn = 0;
     for a in A.iter() {
         leng += a;
         if leng >= n {
@@ -37,5 +37,5 @@ fn is_acceptable(n: usize, A: &Vec<usize>, K: usize) -> bool {
         }
     }
 
-    return cnt > K;
+    return cn > K;
 }
