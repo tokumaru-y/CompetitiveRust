@@ -1,33 +1,41 @@
-#[allow(unused_imports)]
-use itertools::Itertools;
-#[allow(unused_imports)]
-use proconio::{
-    input,
-    marker::{Chars, Isize1, Usize1},
-};
-#[allow(unused_imports)]
-use std::{
-    cmp::Reverse,
-    cmp::{max, min},
-    collections::{BTreeMap, BTreeSet, BinaryHeap, HashMap, HashSet, VecDeque},
-    process::exit,
-};
-use std::{
-    fmt::Debug,
-    io::{stdout, Write},
-    mem::swap,
-};
-fn unwrap_result_type<T: Debug>(x: Result<T, T>) -> T {
-    if x.is_ok() {
-        x.unwrap()
-    } else {
-        x.unwrap_err()
+use proconio::input;
+
+fn main() {
+    input! {
+        N: usize,
+        L: usize,
+        K: usize,
+        mut A: [usize; N]
     }
+    let mut is_ok = 0usize;
+    let mut is_ng = L;
+    A.push(L);
+    let mut new_a = vec![A[0]];
+    for i in 0..N {
+        new_a.push(A[i + 1] - A[i])
+    }
+    while is_ng - is_ok > 1 {
+        let check = (is_ok + is_ng) / 2;
+        if is_acceptable(check, &new_a, K) {
+            is_ok = check;
+        } else {
+            is_ng = check;
+        }
+    }
+
+    println!("{:?}", is_ok);
 }
 
-const DXY: [(isize, isize); 4] = [(0, 1), (0, -1), (1, 0), (-1, 0)];
-const FIRST_VALUE: usize = std::usize::MAX;
-const MOD: usize = 1_000_000_007;
+fn is_acceptable(n: usize, A: &Vec<usize>, K: usize) -> bool {
+    let mut leng = 0usize;
+    let mut cnt = 0;
+    for a in A.iter() {
+        leng += a;
+        if leng >= n {
+            cnt += 1;
+            leng = 0;
+        }
+    }
 
-#[allow(non_snake_case)]
-fn main() {}
+    return cnt > K;
+}
